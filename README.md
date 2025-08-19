@@ -52,3 +52,4 @@ export default tseslint.config({
   },
 })
 ```
+<a href="https://www.flaticon.com/free-icons/manifestation" title="manifestation icons">Manifestation icons created by Creative Stall Premium - Flaticon</a>
