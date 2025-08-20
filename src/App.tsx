@@ -3,7 +3,7 @@ import PlantList from "./components/PlantList";
 
 function App() {
   return (
-    <div className="main min-h-screen text-white p-6">
+    <div className="min-h-screen text-white p-6">
       <h1
         className="cinzel-decorative-bold max-w-4xl sm:text-3xl font-bold text-center mb-12 lg:my-14 text-[#604b3a] border-[#4e311a] border p-4 bg-white/10 mx-auto"
         style={{ textShadow: "4px 5px 4px rgba(0,0,0,0.25)" }}

@@ -24,9 +24,20 @@
   font-style: normal;
 }
 
-.main {
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%; /* ensures the background covers full height */
+}
+
+body {
   background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
   background-color: #9e916b;
+  background-repeat: repeat; /* keeps the texture repeating */
+  background-attachment: fixed; /* keeps texture in place when scrolling */
+  background-size: auto; /* keeps original size, or use cover/contain if you want */
 }
 
 .card {

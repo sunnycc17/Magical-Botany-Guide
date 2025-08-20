@@ -1,28 +1,56 @@
 import { useEffect, useState } from "react";
 
+// Define the Plant interface for TypeScript type safety
 interface Plant {
   id: number;
-  name: string;
-  preferred_common_name: string;
-  default_photo?: { medium_url: string };
-  wikipedia_url?: string;
+  name: string; // scientific name
+  preferred_common_name: string; // common name (user-friendly)
+  default_photo?: { medium_url: string }; // optional photo
+  wikipedia_url?: string; // optional link
+  iconic_taxon_name?: string; // taxon category (Plantae, Animalia, etc.)
 }
 
 export default function PlantList() {
+  // State to hold plant data
   const [plants, setPlants] = useState<Plant[]>([]);
+  // Loading state to show a message while fetching
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Fetch plant data from iNaturalist API
     fetch("https://api.inaturalist.org/v1/taxa?q=rose&rank=species")
       .then((res) => res.json())
       .then((data) => {
-        setPlants(data.results);
+        // Filter only plants (iconic_taxon_name === "Plantae")
+        const filteredPlants = data.results
+          .filter((plant: any) => plant.iconic_taxon_name === "Plantae")
+          // Capitalize the first letter of common names
+          .map((plant: any) => ({
+            ...plant,
+            preferred_common_name: plant.preferred_common_name
+              ? plant.preferred_common_name.charAt(0).toUpperCase() +
+                plant.preferred_common_name.slice(1)
+              : "Unknown Plant",
+          }));
+
+        // Save filtered and formatted plants to state
+        setPlants(filteredPlants);
+        // Stop loading
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching plants:", error);
         setLoading(false);
       });
-  }, []);
+  }, []); // Empty dependency array = run once on mount
 
+  // Show a loading message while fetching
   if (loading)
-    return <p className="text-amber-900 text-center items-center">Loading magical plants...</p>;
+    return (
+      <p className="text-amber-900 text-center items-center">
+        Loading magical plants...
+      </p>
+    );
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -33,6 +61,7 @@ export default function PlantList() {
               key={plant.id}
               className="p-4 card rounded-2xl shadow hover:shadow-lg transition cormorant-garamond"
             >
+              {/* Plant image */}
               <img
                 src={
                   plant.default_photo?.medium_url ||
@@ -41,10 +70,13 @@ export default function PlantList() {
                 alt={plant.preferred_common_name}
                 className="w-full h-40 sm:h-48 md:h-40 object-cover rounded-xl mb-2"
               />
+              {/* Plant common name */}
               <h2 className="font-bold text-lg">
-                {plant.preferred_common_name || "Unknown Plant"}
+                {plant.preferred_common_name}
               </h2>
+              {/* Plant scientific name */}
               <p className="italic text-sm text-sky-100/60">{plant.name}</p>
+              {/* Optional link to Wikipedia */}
               {plant.wikipedia_url && (
                 <a
                   href={plant.wikipedia_url}
