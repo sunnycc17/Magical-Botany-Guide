@@ -22,7 +22,7 @@ export default function PlantList() {
   }, []);
 
   if (loading)
-    return <p className="text-amber-900">Loading magical plants...</p>;
+    return <p className="text-amber-900 text-center items-center">Loading magical plants...</p>;
 
   return (
     <div className="max-w-4xl mx-auto">
