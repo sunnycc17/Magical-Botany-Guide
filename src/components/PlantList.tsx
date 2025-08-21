@@ -59,7 +59,7 @@ export default function PlantList() {
           {plants.map((plant) => (
             <div
               key={plant.id}
-              className="p-4 card rounded-2xl shadow hover:shadow-lg transition cormorant-garamond"
+              className="hover:shadow-amber-100 p-4 card rounded-2xl shadow hover:shadow-lg transition cormorant-garamond"
             >
               {/* Plant image */}
               <img
