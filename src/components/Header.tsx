@@ -1,34 +1,21 @@
-// components/Header.tsx
 import React from "react";
-
-interface NavLink {
-  label: string;
-  href: string;
-}
-
-const navLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Plants", href: "/plants" },
-];
 
 const Header: React.FC = () => {
   return (
-    <header className="w-full p-6 flex justify-between items-center bg-black/50 backdrop-blur-md text-amber-200 shadow-md fixed top-0 z-50">
-      <h1 className="text-2xl sm:text-3xl font-bold cinzel-regular">
+    <header className="w-full p-4 sm:p-6 bg-black/50 backdrop-blur-md text-amber-200 shadow-md fixed top-0 z-50 flex flex-col sm:flex-row items-center sm:justify-between gap-4">
+      {/* Site title */}
+      <h1 className="text-2xl sm:text-3xl font-bold cinzel-regular text-center sm:text-left">
         Magical Botany Guide
       </h1>
-      <nav className="space-x-4">
-        {navLinks.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            className="hover:text-amber-400 transition-colors duration-200 cormorant"
-          >
-            {link.label}
-          </a>
-        ))}
-      </nav>
+
+      {/* Search bar */}
+      <form className="w-full sm:w-1/3">
+        <input
+          type="text"
+          placeholder="Search plants..."
+          className="w-full px-4 py-2 rounded-md bg-black/30 backdrop-blur-sm border border-amber-200 placeholder-amber-10 text-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-300 transition cormorant"
+        />
+      </form>
     </header>
   );
 };

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import Preloader from "./components/Preloader";
 import Header from "./components/Header";
+import PlantList from "./components/PlantList";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -21,9 +22,9 @@ function App() {
     <div className="">
       <Header />
 
+      <PlantList />
     </div>
   );
 }
 
 export default App;
-
