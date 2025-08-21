@@ -11,7 +11,7 @@ export default function Preloader() {
 
   return (
     <div
-      className={`fixed inset-0 z-50 grid place-items-center bg-black/80 transition-opacity duration-1000 ${
+      className={`fixed inset-0 z-50 grid place-items-center  transition-opacity duration-1000 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >

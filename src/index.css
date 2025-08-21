@@ -32,12 +32,19 @@ body {
   height: 100%; /* ensures the background covers full height */
 }
 
-body {
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
   background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  background-color: #9e916b;
-  background-repeat: repeat; /* keeps the texture repeating */
-  background-attachment: fixed; /* keeps texture in place when scrolling */
-  background-size: auto; /* keeps original size, or use cover/contain if you want */
+  background-repeat: repeat;
+  background-attachment: fixed;
+  opacity: 0.2; /* lower value = more subtle */
+  pointer-events: none; /* allows clicks through */
+  z-index: -1; /* behind everything */
+}
+body {
+  background-color: #23221d; /* your base color */
 }
 
 .card {

@@ -30,7 +30,7 @@ function App() {
         Explore enchanted plants like a true botanist
       </div>
 
-      <PlantList />
+
     </div>
   );
 }
