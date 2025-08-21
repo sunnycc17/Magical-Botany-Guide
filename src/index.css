@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
-.cinzel-decorative-regular {
+.cinzel-regular {
   font-family: "Cinzel Decorative", serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.cinzel-decorative-bold {
+.cinzel-bold {
   font-family: "Cinzel Decorative", serif;
   font-weight: 700;
   font-style: normal;
 }
 
-.cinzel-decorative-black {
+.cinzel-black {
   font-family: "Cinzel Decorative", serif;
   font-weight: 900;
   font-style: normal;
 }
 
-.cormorant-garamond {
+.cormorant {
   font-family: "Cormorant Garamond", serif;
   font-weight: 400; /* or 700 */
   font-style: normal;
@@ -48,7 +48,7 @@ body {
 }
 
 .card {
-  background-color: #4a2e18b0;
+  background-color: #928880b0;
   background-image: url("https://www.transparenttextures.com/patterns/dust.png");
   background-blend-mode: overlay;
 }
