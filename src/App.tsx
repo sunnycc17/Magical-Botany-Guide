@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./index.css";
-import PlantList from "./components/PlantList";
 import Preloader from "./components/Preloader";
 import Header from "./components/Header";
 
@@ -21,7 +20,7 @@ function App() {
   return (
     <div className="">
       <Header />
-      <PlantList />
+
     </div>
   );
 }

@@ -23,7 +23,7 @@ const Header: React.FC = () => {
           <a
             key={link.href}
             href={link.href}
-            className="hover:text-amber-400 transition-colors duration-200"
+            className="hover:text-amber-400 transition-colors duration-200 cormorant"
           >
             {link.label}
           </a>
