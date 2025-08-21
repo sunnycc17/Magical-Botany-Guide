@@ -3,26 +3,34 @@ import "./index.css";
 import Preloader from "./components/Preloader";
 import Header from "./components/Header";
 import PlantList from "./components/PlantList";
+import HeroSection from "./components/HeroSection";
+import Footer from "./components/Footer";
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [showPreloader, setShowPreloader] = useState(false);
 
   useEffect(() => {
-    // Fake loading time (2.5s), can be adjusted
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+    const hasVisited = localStorage.getItem("hasVisited");
 
-    return () => clearTimeout(timer);
+    if (!hasVisited) {
+      // First visit → show preloader
+      setShowPreloader(true);
+      localStorage.setItem("hasVisited", "true");
+
+      // Hide after 2.5s (to match Preloader fade)
+      const timer = setTimeout(() => setShowPreloader(false), 2500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
-  if (loading) return <Preloader />;
+  if (showPreloader) return <Preloader />;
 
   return (
     <div className="">
       <Header />
-
+      <HeroSection />
       <PlantList />
+      <Footer />
     </div>
   );
 }
