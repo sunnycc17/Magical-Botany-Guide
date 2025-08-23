@@ -1,38 +1,50 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import "./index.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import Preloader from "./components/Preloader";
 import Header from "./components/Header";
-import PlantList from "./components/PlantList";
 import HeroSection from "./components/HeroSection";
+import FavouritePlants from "./components/FavouritePlants";
 import Footer from "./components/Footer";
 
-function App() {
-  const [showPreloader, setShowPreloader] = useState(false);
+import { plantsData } from "./Data/PlantData";
+import usePreloader from "./hooks/usePreloader";
+
+const App: FC = () => {
+  const showPreloader = usePreloader();
 
   useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisited");
-
-    if (!hasVisited) {
-      // First visit → show preloader
-      setShowPreloader(true);
-      localStorage.setItem("hasVisited", "true");
-
-      // Hide after 2.5s (to match Preloader fade)
-      const timer = setTimeout(() => setShowPreloader(false), 2500);
-      return () => clearTimeout(timer);
-    }
+    AOS.init({ duration: 1000, once: true });
   }, []);
 
   if (showPreloader) return <Preloader />;
 
   return (
-    <div className="">
+    <div>
       <Header />
       <HeroSection />
-      <PlantList />
+
+      {/* Favourite Plants Section */}
+      <main
+        className="container mx-auto p-12 relative bg-[#ddc190] 
+  bg-[radial-gradient(circle_at_center,rgba(221,193,144,0.9)_60%,rgba(0,0,0,0.4)_100%)]"
+      >
+        {plantsData.map((plant, index) => (
+          <FavouritePlants
+            key={plant.id}
+            name={plant.name}
+            description={plant.description}
+            image={plant.image}
+            reverse={index % 2 === 1}
+          />
+        ))}
+      </main>
+
       <Footer />
     </div>
   );
-}
+};
 
 export default App;
