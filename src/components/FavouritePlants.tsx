@@ -4,7 +4,8 @@ type PlantProps = {
   name: string;
   description: string;
   image: string;
-  reverse?: boolean; // controls left/right
+  reverse?: boolean;
+  index?: number; // 👈 new
 };
 
 const FavouritePlants: React.FC<PlantProps> = ({
@@ -12,21 +13,19 @@ const FavouritePlants: React.FC<PlantProps> = ({
   description,
   image,
   reverse,
+  index = 0, // default to 0
 }) => {
   return (
     <div
-      className={`flex flex-col md:flex-row items-center gap-8  ${
+      className={`flex flex-col md:flex-row items-center gap-8 ${
         reverse ? "md:flex-row-reverse" : ""
       }`}
       data-aos="fade-up"
+      data-aos-delay={index * 50} // 👈 delay increases by 50ms per item
     >
       {/* Image */}
       <div className="w-full md:w-1/2 flex justify-center">
-        <img
-          src={image}
-          alt={name}
-          className=" w-80 h-full object-cover"
-        />
+        <img src={image} alt={name} className="w-80 h-full object-cover" />
       </div>
 
       {/* Text */}

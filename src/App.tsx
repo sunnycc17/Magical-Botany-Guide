@@ -38,6 +38,7 @@ const App: FC = () => {
             description={plant.description}
             image={plant.image}
             reverse={index % 2 === 1}
+            index={index}
           />
         ))}
       </main>
