@@ -25,10 +25,9 @@ const App: FC = () => {
     <div>
       <Header />
       <HeroSection />
-
       {/* Favourite Plants Section */}
       <main
-        className="container mx-auto p-12 relative bg-[#ddc190] 
+        className="container mx-auto p-4 relative bg-[#ddc190] 
   bg-[radial-gradient(circle_at_center,rgba(221,193,144,0.9)_60%,rgba(0,0,0,0.4)_100%)]"
       >
         {plantsData.map((plant, index) => (
