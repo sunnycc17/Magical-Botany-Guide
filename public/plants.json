@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Lavender",
+    "description": "Lavender is a delicate purple flower known for its soothing fragrance and calming energy. In magical traditions, it’s often used in spells for peace, love, and protection, and to invite restful sleep. Medicinally, lavender is celebrated for reducing anxiety, easing insomnia, and alleviating mild pain.",
+    "image": "https://via.placeholder.com/150?text=Lavender"
+  },
+  {
+    "id": 2,
+    "name": "Echinacea",
+    "description": "Echinacea, also called the coneflower, is a striking purple-pink bloom often associated with strength and resilience. Magically, it’s used to boost vitality, protect against negativity, and promote courage. Medicinally, echinacea is prized for supporting the immune system and helping to ward off colds and infections.",
+    "image": "https://via.placeholder.com/150?text=Echinacea"
+  },
+  {
+    "id": 3,
+    "name": "Calendula",
+    "description": "Calendula, with its golden, sunny petals, is both a healer and a protector. In magical lore, it attracts love, confidence, and protection, while promoting healing energies. Medicinally, calendula is widely used to treat skin irritations, cuts, burns, and inflammation.",
+    "image": "https://via.placeholder.com/150?text=Calendula"
+  },
+  {
+    "id": 4,
+    "name": "Sage",
+    "description": "Sage is a sacred herb with silvery leaves, often used in rituals for purification, protection, and wisdom. Magically, it clears negativity and promotes mental clarity. Medicinally, sage has antimicrobial properties, soothes sore throats, aids digestion, and acts as a mild antioxidant.",
+    "image": "https://via.placeholder.com/150?text=Sage"
+  },
+  {
+    "id": 5,
+    "name": "Rosemary",
+    "description": "Rosemary is a fragrant, evergreen herb with needle-like leaves. In magic, it enhances memory, mental clarity, and protection, and is sometimes used in love and purification rituals. Medicinally, it helps with digestion, relieves muscle pain, and offers antioxidant benefits.",
+    "image": "https://via.placeholder.com/150?text=Rosemary"
+  }
+]

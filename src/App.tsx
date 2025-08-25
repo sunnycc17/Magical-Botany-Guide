@@ -42,6 +42,7 @@ const App: FC = () => {
         ))}
       </main>
 
+
       <Footer />
     </div>
   );

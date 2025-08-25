@@ -21,7 +21,7 @@ const FavouritePlants: React.FC<PlantProps> = ({
         reverse ? "md:flex-row-reverse" : ""
       }`}
       data-aos="fade-up"
-      data-aos-delay={index * 50} // 👈 delay increases by 50ms per item
+      data-aos-delay={index * 100} // 👈 delay increases by 50ms per item
     >
       {/* Image */}
       <div className="w-full md:w-1/2 flex justify-center">
