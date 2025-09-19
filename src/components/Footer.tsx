@@ -51,8 +51,12 @@ export default function Footer() {
         <div className="flex flex-col justify-between">
           <h3 className="text-lg font-semibold mb-3 text-amber-200">Credits</h3>
           <p className="text-sm text-amber-100/80">
-            © {new Date().getFullYear()} Magical Botany Guide. By Sunny |
-            powered by iNaturalist API 🌿
+            © {new Date().getFullYear()} Magical Botany Guide |
+            <i className="ml-2 hover:underline">
+              <a target="_blank" href="https://github.com/sunnycc17">
+                By Sunny
+              </a>
+            </i>
           </p>
         </div>
       </div>
