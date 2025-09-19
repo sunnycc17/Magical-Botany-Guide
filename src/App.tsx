@@ -6,10 +6,11 @@ import "aos/dist/aos.css";
 import Preloader from "./components/Preloader";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
-import FavouritePlantsList from "./components/FavouritePlantsList"; // 👈 new
+import AboutSection from "./components/AboutSection"; // <-- make sure this is imported
 import Footer from "./components/Footer";
 
 import usePreloader from "./hooks/usePreloader";
+import FavouritePlants from "./components/FavouritePlantsList";
 
 const App: FC = () => {
   const showPreloader = usePreloader();
@@ -21,18 +22,24 @@ const App: FC = () => {
   if (showPreloader) return <Preloader />;
 
   return (
-    <div>
+    <>
       <Header />
-      <HeroSection />
-      {/* Favourite Plants Section */}
-      <main
-        className="container mx-auto p-4 relative bg-[#ddc190] 
-        bg-[radial-gradient(circle_at_center,rgba(221,193,144,0.9)_60%,rgba(0,0,0,0.4)_100%)]"
+
+      {/* Parallax background wrapper */}
+      <div
+        className="relative bg-cover bg-center bg-fixed opacity-80"
+        style={{ backgroundImage: "url('./moonlit-forest.png')" }}
       >
-        <FavouritePlantsList />
-      </main>
+        <div className="relative z-10">
+          <HeroSection />
+          <AboutSection />
+          <h1 className="text-white text-4xl cormorant uppercase text-center p-6 m-5 underline underline-offset-8">  Twilight Garden </h1>
+          <FavouritePlants />
+        </div>
+      </div>
+
       <Footer />
-    </div>
+    </>
   );
 };
 

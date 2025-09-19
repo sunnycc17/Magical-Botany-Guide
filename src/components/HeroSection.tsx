@@ -1,32 +1,32 @@
 // components/HeroSection.tsx
 export default function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center justify-center text-center text-amber-100 overflow-hidden">
-      {/* Background image with parallax */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('./preview.png')", // replace with your image
-          backgroundAttachment: "fixed", // <-- parallax effect
-        }}
-      />
-
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+    <section className="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden px-6">
+      
 
       {/* Content */}
-      <div className="relative z-10 p-6 max-w-2xl">
-        <h1 className="text-4xl sm:text-6xl font-bold cinzel-regular drop-shadow-md">
+      <div className="relative z-10 max-w-4xl flex flex-col items-center gap-6">
+        <h1 className="text-5xl sm:text-6xl font-bold cinzel-regular drop-shadow-md text-emerald-100 pt-21">
           Welcome to the Magical Botany Guide
         </h1>
-        <p className="mt-4 text-lg sm:text-xl cormorant text-amber-200/80">
-          Discover the secrets of plants, herbs, and nature’s hidden magic 🌱
+
+        <p className="text-xl sm:text-2xl cormorant max-w-xl text-emerald-200/90">
+          Explore the secrets of mystical plants, herbs, and enchanted forests.
+        </p>
+
+        <p className="text-lg sm:text-xl cormorant max-w-lg text-emerald-100/75">
+          Curated guides and botanical insights for lovers of dark fantasy and magic.
         </p>
 
         {/* Scroll button */}
         <a
           href="#plants"
-          className="mt-8 inline-block px-6 py-3 rounded-full bg-amber-600/80 hover:bg-amber-500 text-black font-semibold shadow-lg transition"
+          className="mt-8 inline-block px-14 py-5 rounded-full
+            bg-gradient-to-r from-[#4AC8FF] via-[#00F0FF] to-[#72D9FF]
+            text-stone-900 font-bold tracking-wide shadow-lg cinzel-bold
+            transition-all duration-300 ease-in-out
+            hover:shadow-[0_0_25px_rgba(74,200,255,0.7)]
+            active:scale-95 active:shadow-[0_0_15px_rgba(74,200,255,0.5)]"
         >
           Explore Plants
         </a>

@@ -47,7 +47,9 @@ const FavouritePlantsList: React.FC = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="space-y-16">
+    <div
+      className="space-y-16 container mx-auto p-4 relative"
+    >
       {plants.map((plant, index) => (
         <FavouritePlants
           key={plant.id ?? index}

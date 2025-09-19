@@ -17,7 +17,7 @@ const FavouritePlants: React.FC<PlantProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col md:flex-row items-center gap-8 ${
+      className={`flex bg-black/50 p-6 flex-col md:flex-row items-center gap-8 ${
         reverse ? "md:flex-row-reverse" : ""
       }`}
       data-aos="fade-up"
@@ -30,8 +30,8 @@ const FavouritePlants: React.FC<PlantProps> = ({
 
       {/* Text */}
       <div className="w-full md:w-1/2">
-        <h2 className="text-2xl font-bold mb-4">{name}</h2>
-        <p className="text-gray-600 text-lg">{description}</p>
+        <h2 className="text-2xl font-bold mb-4 text-sky-200/70">{name}</h2>
+        <p className="text-white/70 text-lg">{description}</p>
       </div>
     </div>
   );
