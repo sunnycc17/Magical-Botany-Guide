@@ -37,11 +37,10 @@ const App: FC = () => {
             {" "}
             Twilight Garden{" "}
           </h1>
-          <Plants />
+          <Plants /> 
+          <Footer />
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };
