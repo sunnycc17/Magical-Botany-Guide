@@ -28,7 +28,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="#"
+                href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#111;&#103;&#107;&#114;&#105;&#115;&#116;&#105;&#110;&#97;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;"
                 className="hover:text-[#a6d9ee]/80 transition-colors duration-300"
               >
                 Contact
