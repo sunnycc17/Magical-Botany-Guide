@@ -10,7 +10,7 @@ import AboutSection from "./components/AboutSection"; // <-- make sure this is i
 import Footer from "./components/Footer";
 
 import usePreloader from "./hooks/usePreloader";
-import FavouritePlants from "./components/FavouritePlantsList";
+import Plants from "./components/Plants";
 
 const App: FC = () => {
   const showPreloader = usePreloader();
@@ -33,8 +33,11 @@ const App: FC = () => {
         <div className="relative z-10">
           <HeroSection />
           <AboutSection />
-          <h1 className="text-white text-4xl cormorant uppercase text-center p-6 m-5 underline underline-offset-8">  Twilight Garden </h1>
-          <FavouritePlants />
+          <h1 className="text-white text-4xl cormorant uppercase text-center p-6 m-5 underline underline-offset-8">
+            {" "}
+            Twilight Garden{" "}
+          </h1>
+          <Plants />
         </div>
       </div>
 
