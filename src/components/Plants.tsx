@@ -31,7 +31,7 @@ const fetchPlants = async (): Promise<Plant[]> => {
   return response.json();
 };
 
-const FavouritePlantsList: React.FC = () => {
+const Plants: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(4); // show 4 at first
   const {
     data: plants,
@@ -100,4 +100,4 @@ const FavouritePlantsList: React.FC = () => {
   );
 };
 
-export default FavouritePlantsList;
+export default Plants;
