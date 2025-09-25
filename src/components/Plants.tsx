@@ -33,7 +33,9 @@ const Plants: React.FC<PlantsProps> = ({ selectedPlantId }) => {
   const [highlightId, setHighlightId] = useState<number | null>(null);
   const highlightTimeoutRef = useRef<number | null>(null);
 
-  // Fetch plants
+  // Track last highlighted plant to prevent repeated scrolls on Load More
+  const lastHighlightedRef = useRef<number | null>(null);
+
   useEffect(() => {
     setLoading(true);
     fetchPlants()
@@ -42,27 +44,35 @@ const Plants: React.FC<PlantsProps> = ({ selectedPlantId }) => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Scroll to selected plant & highlight
+  // Scroll and highlight when a new plant is selected
   useEffect(() => {
     if (!selectedPlantId || !plants.length) return;
+    if (lastHighlightedRef.current === selectedPlantId) return; // skip if already highlighted
 
     const selectedIndex = plants.findIndex((p) => p.id === selectedPlantId);
     if (selectedIndex === -1) return;
 
-    // Make sure selected plant is rendered
+    // Ensure the selected plant is rendered
     if (selectedIndex >= visibleCount) setVisibleCount(selectedIndex + 1);
 
-    const el = document.getElementById(`plant-${selectedPlantId}`);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      setHighlightId(selectedPlantId);
-      if (highlightTimeoutRef.current)
-        window.clearTimeout(highlightTimeoutRef.current);
-      highlightTimeoutRef.current = window.setTimeout(
-        () => setHighlightId(null),
-        3000
-      );
-    }
+    // Scroll and highlight
+    setTimeout(() => {
+      const el = document.getElementById(`plant-${selectedPlantId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        setHighlightId(selectedPlantId);
+
+        if (highlightTimeoutRef.current)
+          window.clearTimeout(highlightTimeoutRef.current);
+
+        highlightTimeoutRef.current = window.setTimeout(
+          () => setHighlightId(null),
+          3000
+        );
+
+        lastHighlightedRef.current = selectedPlantId;
+      }
+    }, 50); // slight delay to ensure element is rendered
   }, [selectedPlantId, plants, visibleCount]);
 
   if (loading) return <p className="text-center text-lg">Loading plants...</p>;
