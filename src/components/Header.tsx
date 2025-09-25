@@ -5,22 +5,24 @@ interface HeaderProps {
   onSelectPlant: (plant: Plant) => void;
 }
 
-const fetchPlants = async (query: string): Promise<Plant[]> => {
+const fetchPlants = async (
+  query: string,
+  signal?: AbortSignal
+): Promise<Plant[]> => {
   if (!query) return [];
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", import.meta.env.VITE_API_AUTH);
 
-  const requestOptions: RequestInit = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-    mode: "cors",
-  };
-
   const response = await fetch(
     `https://woocommerce-1181660-4488293.cloudwaysapps.com/wp-json/sunny/v1/botany/${query}`,
-    requestOptions
+    {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+      mode: "cors",
+      signal,
+    }
   );
 
   if (!response.ok) throw new Error("Failed to fetch plants");
@@ -31,69 +33,65 @@ const fetchPlants = async (query: string): Promise<Plant[]> => {
 const Header: React.FC<HeaderProps> = ({ onSelectPlant }) => {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState(search);
+  const [results, setResults] = useState<Plant[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  // Debounce search input
   useEffect(() => {
-    const handler = setTimeout(() => setDebouncedSearch(search), 300);
+    const handler = setTimeout(() => setDebouncedSearch(search), 500); // 500ms debounce
     return () => clearTimeout(handler);
   }, [search]);
 
+  // Open dropdown if there is a search value
   useEffect(() => {
-    // open dropdown when there is a value
     setIsOpen(Boolean(debouncedSearch));
   }, [debouncedSearch]);
 
-  // close on outside click
+  // Close dropdown on outside click
   useEffect(() => {
-    const onDocClick = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      if (!containerRef.current.contains(e.target as Node)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", onDocClick);
-    return () => document.removeEventListener("mousedown", onDocClick);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // fetch results (small local wrapper so we can still use react-query if desired)
-  const [results, setResults] = useState<Plant[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [fetchError, setFetchError] = useState<string | null>(null);
-
+  // Fetch plants when debounced search changes
   useEffect(() => {
     if (!debouncedSearch) {
       setResults([]);
       setLoading(false);
-      setFetchError(null);
+      setError(null);
       return;
     }
-    let cancelled = false;
+
+    const controller = new AbortController();
     setLoading(true);
-    setFetchError(null);
+    setError(null);
 
-    fetchPlants(debouncedSearch)
-      .then((r) => {
-        if (cancelled) return;
-        setResults(r);
-      })
+    fetchPlants(debouncedSearch, controller.signal)
+      .then((r) => setResults(r))
       .catch((err) => {
-        if (cancelled) return;
-        setFetchError(err.message || "Error fetching plants");
+        if (err.name !== "AbortError")
+          setError(err.message || "Error fetching plants");
       })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
+      .finally(() => setLoading(false));
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort(); // Cancel previous request
   }, [debouncedSearch]);
 
   const handleSelect = (plant: Plant) => {
-    onSelectPlant(plant); // signal App/Plants to scroll & highlight
-    setSearch(""); // clear input
-    setDebouncedSearch(""); // close dropdown via effect
+    onSelectPlant(plant);
+    setSearch("");
+    setDebouncedSearch("");
     setIsOpen(false);
   };
 
@@ -107,18 +105,18 @@ const Header: React.FC<HeaderProps> = ({ onSelectPlant }) => {
         <input
           type="text"
           placeholder="Search plants..."
-          className="w-full px-4 py-2 rounded-md bg-black/30 backdrop-blur-sm border border-[#d4f1fe] placeholder-white/60 text-white focus:outline-none focus:ring-2 focus:ring-[#a6d9ee] transition cormorant"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onFocus={() => setIsOpen(Boolean(debouncedSearch))}
+          className="w-full px-4 py-2 rounded-md bg-black/30 backdrop-blur-sm border border-[#d4f1fe] placeholder-white/60 text-white focus:outline-none focus:ring-2 focus:ring-[#a6d9ee] transition cormorant"
         />
 
         {isOpen && (
           <div className="absolute top-full left-0 w-full bg-black/80 backdrop-blur-md border border-t-0 border-[#d4f1fe] max-h-64 overflow-y-auto z-50">
             {loading ? (
               <p className="text-white/70 p-2">Loading...</p>
-            ) : fetchError ? (
-              <p className="text-red-400 p-2">Error fetching plants</p>
+            ) : error ? (
+              <p className="text-red-400 p-2">{error}</p>
             ) : results.length > 0 ? (
               results.slice(0, 8).map((plant) => (
                 <div
