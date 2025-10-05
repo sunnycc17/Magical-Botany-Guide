@@ -1,47 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Plant } from "./Plants";
+import React, { useState, useRef, useEffect } from "react";
+import { Plant } from "../types/plant";
+import { usePlantSearch } from "../hooks/usePlantSearch";
 
 interface HeaderProps {
   onSelectPlant: (plant: Plant) => void;
 }
 
-const fetchPlants = async (
-  query: string,
-  signal?: AbortSignal
-): Promise<Plant[]> => {
-  if (!query) return [];
-
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", import.meta.env.VITE_API_AUTH);
-
-  const response = await fetch(
-    `https://woocommerce-1181660-4488293.cloudwaysapps.com/wp-json/sunny/v1/botany/${query}`,
-    {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-      mode: "cors",
-      signal,
-    }
-  );
-
-  if (!response.ok) throw new Error("Failed to fetch plants");
-
-  return response.json();
-};
-
 const Header: React.FC<HeaderProps> = ({ onSelectPlant }) => {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState(search);
-  const [results, setResults] = useState<Plant[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  const { results, loading, error } = usePlantSearch(debouncedSearch);
+
   // Debounce search input
   useEffect(() => {
-    const handler = setTimeout(() => setDebouncedSearch(search), 500); // 500ms debounce
+    const handler = setTimeout(() => setDebouncedSearch(search), 500);
     return () => clearTimeout(handler);
   }, [search]);
 
@@ -63,30 +38,6 @@ const Header: React.FC<HeaderProps> = ({ onSelectPlant }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  // Fetch plants when debounced search changes
-  useEffect(() => {
-    if (!debouncedSearch) {
-      setResults([]);
-      setLoading(false);
-      setError(null);
-      return;
-    }
-
-    const controller = new AbortController();
-    setLoading(true);
-    setError(null);
-
-    fetchPlants(debouncedSearch, controller.signal)
-      .then((r) => setResults(r))
-      .catch((err) => {
-        if (err.name !== "AbortError")
-          setError(err.message || "Error fetching plants");
-      })
-      .finally(() => setLoading(false));
-
-    return () => controller.abort(); // Cancel previous request
-  }, [debouncedSearch]);
 
   const handleSelect = (plant: Plant) => {
     onSelectPlant(plant);

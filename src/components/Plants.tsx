@@ -1,29 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-
-export type Plant = {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-};
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { Plant } from "../types/plant";
+import { fetchPlants } from "../services/fetchplants";
+import PlantCard from "./PlantCard";
 
 interface PlantsProps {
   selectedPlantId: number | null;
 }
-
-const fetchPlants = async (): Promise<Plant[]> => {
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", import.meta.env.VITE_API_AUTH);
-
-  const response = await fetch(
-    "https://woocommerce-1181660-4488293.cloudwaysapps.com/wp-json/sunny/v1/botany",
-    { method: "GET", headers: myHeaders, redirect: "follow", mode: "cors" }
-  );
-
-  if (!response.ok) throw new Error("Failed to fetch plants");
-
-  return response.json();
-};
 
 const Plants: React.FC<PlantsProps> = ({ selectedPlantId }) => {
   const [plants, setPlants] = useState<Plant[]>([]);
@@ -32,8 +14,6 @@ const Plants: React.FC<PlantsProps> = ({ selectedPlantId }) => {
   const [error, setError] = useState<string | null>(null);
   const [highlightId, setHighlightId] = useState<number | null>(null);
   const highlightTimeoutRef = useRef<number | null>(null);
-
-  // Track last highlighted plant to prevent repeated scrolls on Load More
   const lastHighlightedRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -47,15 +27,13 @@ const Plants: React.FC<PlantsProps> = ({ selectedPlantId }) => {
   // Scroll and highlight when a new plant is selected
   useEffect(() => {
     if (!selectedPlantId || !plants.length) return;
-    if (lastHighlightedRef.current === selectedPlantId) return; // skip if already highlighted
+    if (lastHighlightedRef.current === selectedPlantId) return;
 
     const selectedIndex = plants.findIndex((p) => p.id === selectedPlantId);
     if (selectedIndex === -1) return;
 
-    // Ensure the selected plant is rendered
     if (selectedIndex >= visibleCount) setVisibleCount(selectedIndex + 1);
 
-    // Scroll and highlight
     setTimeout(() => {
       const el = document.getElementById(`plant-${selectedPlantId}`);
       if (el) {
@@ -72,40 +50,26 @@ const Plants: React.FC<PlantsProps> = ({ selectedPlantId }) => {
 
         lastHighlightedRef.current = selectedPlantId;
       }
-    }, 50); // slight delay to ensure element is rendered
+    }, 50);
   }, [selectedPlantId, plants, visibleCount]);
+
+  const displayedPlants = useMemo(
+    () => plants.slice(0, visibleCount),
+    [plants, visibleCount]
+  );
 
   if (loading) return <p className="text-center text-lg">Loading plants...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
-  const displayedPlants = plants.slice(0, visibleCount);
-
   return (
     <div className="space-y-24 container mx-auto p-4 relative">
       {displayedPlants.map((plant, index) => (
-        <div
-          id={`plant-${plant.id}`}
+        <PlantCard
           key={plant.id}
-          className={`flex bg-black/50 p-6 flex-col md:flex-row items-center gap-8 ${
-            index % 2 === 1 ? "md:flex-row-reverse" : ""
-          } ${highlightId === plant.id ? "ring-4 ring-[#a6d9ee]/40" : ""}`}
-          data-aos="fade-up"
-          data-aos-delay={index * 50}
-        >
-          <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src={plant.image}
-              alt={plant.name}
-              className="w-80 h-full object-cover"
-            />
-          </div>
-          <div className="w-full md:w-1/2">
-            <h2 className="text-2xl font-bold mb-4 text-sky-200/70">
-              {plant.name}
-            </h2>
-            <p className="text-white/70 text-lg">{plant.description}</p>
-          </div>
-        </div>
+          plant={plant}
+          highlight={highlightId === plant.id}
+          reversed={index % 2 === 1}
+        />
       ))}
 
       {visibleCount < plants.length && (
