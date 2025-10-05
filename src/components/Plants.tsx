@@ -90,7 +90,7 @@ const Plants: React.FC<PlantsProps> = ({ selectedPlantId }) => {
             index % 2 === 1 ? "md:flex-row-reverse" : ""
           } ${highlightId === plant.id ? "ring-4 ring-[#a6d9ee]/40" : ""}`}
           data-aos="fade-up"
-          data-aos-delay={index * 100}
+          data-aos-delay={index * 50}
         >
           <div className="w-full md:w-1/2 flex justify-center">
             <img

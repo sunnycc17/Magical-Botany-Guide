@@ -51,7 +51,7 @@ const AboutSection: React.FC = () => {
               <div className="space-y-2">
                 <h2 className="text-2xl sm:text-3xl font-semibold cinzel-regular text-white">Technology</h2>
                 <p className="text-sky-200/70 text-sm sm:text-base">
-                  Built with HTML, Tailwind CSS, and modern JavaScript, demonstrating responsive layouts and interactive design.
+                  Built with React on Vite, demonstrating responsive layouts and interactive design.
                 </p>
               </div>
             </div>
