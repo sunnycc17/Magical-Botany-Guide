@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Plant } from "../types/plant.ts";
-import { fetchPlants } from "../services/fetchplants.ts"
+import { fetchPlants } from "../services/fetchPlants.ts"
 
 export function usePlants() {
   const [plants, setPlants] = useState<Plant[]>([]);

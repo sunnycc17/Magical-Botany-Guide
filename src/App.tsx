@@ -8,7 +8,9 @@ import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import AboutSection from "./components/AboutSection";
 import Footer from "./components/Footer";
-import Plants, { Plant } from "./components/Plants";
+import Plants from "./components/Plants";
+import { Plant } from "./types/plant";
+
 
 import usePreloader from "./hooks/usePreloader";
 

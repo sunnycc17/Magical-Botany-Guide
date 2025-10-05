@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Plant } from "../types/plant";
-import { fetchPlants } from "../services/fetchplants";
+import { fetchPlants } from "../services/fetchPlants";
 import PlantCard from "./PlantCard";
 
 interface PlantsProps {

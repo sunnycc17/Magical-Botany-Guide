@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Plant } from "../types/plant";
-import { fetchPlantByQuery } from "../services/fetchplants";
+import { fetchPlantByQuery } from "../services/fetchPlants.ts"
 
 export function usePlantSearch(query: string) {
   const [results, setResults] = useState<Plant[]>([]);
